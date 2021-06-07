@@ -7,60 +7,61 @@ import { getItems } from "../actions/itemActions";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 
-const ShoppingList = () => {
-  Component.componentDidMount = () => {
+class ShoppingList extends Component {
+  componentDidMount = () => {
     this.props.getItems();
   };
 
-  const { items } = this.props.item;
-
-  return (
-    <div>
-      <Container>
-        <Button
-          color="dark"
-          style={{ marginBottom: "2rem" }}
-          onClick={() => {
-            const name = prompt("Enter an Item");
-            if (name) {
-              //setItems([...items, { id: uuid(), name: name }]);
-              this.setState((state) => ({
-                items: [...state.items, { id: uuid(), name }],
-              }));
-            }
-          }}
-        >
-          Add Item
-        </Button>
-        <ListGroup>
-          <TransitionGroup className="shopping-list">
-            {items.map(({ id, name }) => {
-              return (
-                <CSSTransition key={id} timeout={500} classNames="fade">
-                  <ListGroupItem>
-                    <Button
-                      className="remove-btn"
-                      color="danger"
-                      size="sm"
-                      onClick={() => {
-                        this.setState((state) => ({
-                          items: state.items.filter((item) => item.id !== id),
-                        }));
-                      }}
-                    >
-                      &times;
-                    </Button>
-                    {name}
-                  </ListGroupItem>
-                </CSSTransition>
-              );
-            })}
-          </TransitionGroup>
-        </ListGroup>
-      </Container>
-    </div>
-  );
-};
+  render() {
+    const { items } = this.props.item;
+    return (
+      <div>
+        <Container>
+          <Button
+            color="dark"
+            style={{ marginBottom: "2rem" }}
+            onClick={() => {
+              const name = prompt("Enter an Item");
+              if (name) {
+                //setItems([...items, { id: uuid(), name: name }]);
+                this.setState((state) => ({
+                  items: [...state.items, { id: uuid(), name }],
+                }));
+              }
+            }}
+          >
+            Add Item
+          </Button>
+          <ListGroup>
+            <TransitionGroup className="shopping-list">
+              {items.map(({ id, name }) => {
+                return (
+                  <CSSTransition key={id} timeout={500} classNames="fade">
+                    <ListGroupItem>
+                      <Button
+                        className="remove-btn"
+                        color="danger"
+                        size="sm"
+                        onClick={() => {
+                          this.setState((state) => ({
+                            items: state.items.filter((item) => item.id !== id),
+                          }));
+                        }}
+                      >
+                        &times;
+                      </Button>
+                      {name}
+                    </ListGroupItem>
+                  </CSSTransition>
+                );
+              })}
+            </TransitionGroup>
+          </ListGroup>
+        </Container>
+      </div>
+    );
+  }
+}
 
 ShoppingList.propTypes = {
   getItems: PropTypes.func.isRequired,
