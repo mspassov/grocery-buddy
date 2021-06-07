@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import { Container, ListGroup, ListGroupItem, Button } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { v4 as uuid } from "uuid";
+import { connect } from "react-redux";
+import { getItems } from "../actions/itemActions";
+import PropTypes from "prop-types";
 
 const ShoppingList = () => {
-  const arr = [
-    { id: uuid(), name: "Milk" },
-    { id: uuid(), name: "Veggies" },
-    { id: uuid(), name: "Juice" },
-    { id: uuid(), name: "Chicken" },
-  ];
-  const [items, setItems] = useState(arr);
+  const componentDidMount = () => {
+    this.props.getItems();
+  };
+
+  const { items } = this.props.item;
 
   return (
     <div>
@@ -21,7 +22,10 @@ const ShoppingList = () => {
           onClick={() => {
             const name = prompt("Enter an Item");
             if (name) {
-              setItems([...items, { id: uuid(), name: name }]);
+              //setItems([...items, { id: uuid(), name: name }]);
+              this.setState((state) => ({
+                items: [...state.items, { id: uuid(), name }],
+              }));
             }
           }}
         >
@@ -38,8 +42,9 @@ const ShoppingList = () => {
                       color="danger"
                       size="sm"
                       onClick={() => {
-                        const newArr = items.filter((curr) => id !== curr.id);
-                        setItems(newArr);
+                        this.setState((state) => ({
+                          items: state.items.filter((item) => item.id !== id),
+                        }));
                       }}
                     >
                       &times;
@@ -56,4 +61,13 @@ const ShoppingList = () => {
   );
 };
 
-export default ShoppingList;
+ShoppingList.propTypes = {
+  getItems: PropTypes.func.isRequired,
+  item: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  item: state.item,
+});
+
+export default connect(mapStateToProps, { getItems })(ShoppingList);
