@@ -35,7 +35,6 @@ class ItemModal extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     const newItem = {
-      id: uuid(),
       name: this.state.name,
     };
 
@@ -80,8 +79,8 @@ class ItemModal extends Component {
   }
 }
 
-const mapStateToProps = state =>({
-    item: state.item
-})
+const mapStateToProps = (state) => ({
+  item: state.item,
+});
 
-export default connect(mapStateToProps, {addItem})(ItemModal);
+export default connect(mapStateToProps, { addItem })(ItemModal);
