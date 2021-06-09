@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import ItemModal from "./components/ItemModal";
 import { Container } from "reactstrap";
 import store from "./store";
+import ShoppingList2 from './components/ShoppingList2'
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <Navbar />
         <Container>
           <ItemModal />
-          <ShoppingList />
+          <ShoppingList2 />
         </Container>
       </div>
     </Provider>
